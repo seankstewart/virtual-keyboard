@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 // import { json } from "@remix-run/node";
 // import { useLoaderData } from "@remix-run/react";
 
@@ -28,8 +28,8 @@ export const extendedKeyboardAMC = [
 export default function Keyboard() {
     // const { posts } = useLoaderData<typeof loader>();
 
+    const formRef = useRef<HTMLFormElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    inputRef.current?.focus();
     
     const [inputValue, setInputValue] = useState('');
 
@@ -43,28 +43,43 @@ export default function Keyboard() {
 
       console.log(`clicked the ${target.value} button`);
 
-      let targetValue = target.value;
+      let inputValue = target.value;
 
       switch (target.value) {
         case "Backspace": 
           if (inputRef.current.value !== '') {
-            targetValue = inputRef.current.value.slice(0, -1);
-            setInputValue(targetValue);
+            inputValue = inputRef.current.value.slice(0, -1);
+            // setInputValue(inputValue);
           }
           break;
         default:
-          setInputValue(inputRef.current.value + targetValue);
+          inputValue = inputRef.current.value + inputValue;
+          // setInputValue(inputRef.current.value + inputValue);
           break
       }
+
+      inputRef.current.value = inputValue;
+      handleSubmit();
     }
     
-    
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement> | Event | void): void => {
+      e?.preventDefault();
+      inputRef.current?.focus();
+    }
     
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
       console.log('handleInput');
       e.preventDefault();
       setInputValue(e.target.value);
     }
+
+
+    useEffect(() => {
+      inputRef.current?.focus();
+      document.body.addEventListener('submit', handleSubmit);
+
+      return () => document.body.removeEventListener('submit', handleSubmit);
+    }, [inputValue])
 
     return (
         <main>
@@ -87,8 +102,17 @@ export default function Keyboard() {
                 ))
               ))}
             </ul>
+
+            {/* UNCONTROLLED
             <section style={{display:"flex",justifyContent:"center"}}>
               <input type="text" value={inputValue} ref={inputRef} onChange={handleInput} />
+            </section> */}
+
+            {/* CONTROLLED */}
+            <section style={{display:"flex",justifyContent:"center"}}>
+              <form name="vkForm" ref={formRef} onSubmit={handleSubmit}>
+                <input type="text" value={inputValue} ref={inputRef} onChange={handleInput} />
+              </form>
             </section>
         </main>
     )

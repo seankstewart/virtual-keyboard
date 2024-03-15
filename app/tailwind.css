@@ -91,7 +91,7 @@ main {
 
 section {
      & input {
-        width: 5%;
+        width: 65%;
         border-radius: .25rem;
         margin: .25rem;
         padding: .25rem .5rem;
