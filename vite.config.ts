@@ -2,9 +2,14 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+const ASSET_URL = process.env.ASSET_URL || '';
+const BASE_NAME = process.env.BASE_NAME || '';
+
 export default defineConfig({
+  base: `${ASSET_URL}`,
   plugins: [
     remix({
+      basename: `${BASE_NAME}`,
       ssr: false,
     }),
     tsconfigPaths(),
