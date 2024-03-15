@@ -49,12 +49,15 @@ export default function Keyboard() {
         case "Backspace": 
           if (inputRef.current.value !== '') {
             inputValue = inputRef.current.value.slice(0, -1);
-            // setInputValue(inputValue);
+          }
+          break;
+        case "Space": 
+          if (inputRef.current.value !== '') {
+            inputValue = inputRef.current.value + " ";
           }
           break;
         default:
           inputValue = inputRef.current.value + inputValue;
-          // setInputValue(inputRef.current.value + inputValue);
           break
       }
 
@@ -83,7 +86,7 @@ export default function Keyboard() {
 
     return (
         <main>
-            <h1>Virtual Keyboard</h1>
+            <h1 className="text-center">Virtual Keyboard</h1>
 
             <ul className="keyboard" style={{}}>
               {extendedKeyboardAMC.map((row) => (
