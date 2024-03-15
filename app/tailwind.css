@@ -8,7 +8,7 @@ html {
 
 body {
     height: 100%;
-    background-color: greenyellow;
+    background-color: rgba(127, 127, 127, 1);
     overflow: hidden;
 
     > div {
@@ -36,10 +36,16 @@ main {
     }
 }
 
+.page-title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
 .keyboard {
     display: inline-grid;
     grid-template-columns: repeat(10, minmax(1ch, 1fr));
-    order: 2;
+    /* order: 2; */
     margin: 1rem 0 0.5rem;
 
     > li {
@@ -54,6 +60,10 @@ main {
             height: 100%;
             border: 1px solid black;
             border-radius: .25rem;
+            background-color: rgba(160, 160,160,1);
+            color: black;
+            font-size: 2rem;
+            font-weight: 700;
         }
 
         &:nth-last-child(-n+3) {
@@ -105,10 +115,11 @@ section {
         font-size: 1.5rem;
         border: 1px solid black;
         border-radius: .25rem;
+        background-color: rgba(180, 180,180,1);
         
         &:focus {
             outline: none;
-            border: 1px solid red;
+            border: 1px solid #666;
         }
      }
 }

@@ -86,7 +86,19 @@ export default function Keyboard() {
 
     return (
         <main>
-            <h1 className="text-center">Virtual Keyboard</h1>
+            <h1 className="page-title text-center">Virtual Keyboard</h1>
+
+            {/* UNCONTROLLED
+            <section style={{display:"flex",justifyContent:"center"}}>
+              <input type="text" value={inputValue} ref={inputRef} onChange={handleInput} />
+            </section> */}
+
+            {/* CONTROLLED */}
+            <section style={{display:"flex",justifyContent:"center"}}>
+              <form name="vkForm" ref={formRef} onSubmit={handleSubmit}>
+                <input type="text" value={inputValue} ref={inputRef} onChange={handleInput} />
+              </form>
+            </section>
 
             <ul className="keyboard" style={{}}>
               {extendedKeyboardAMC.map((row) => (
@@ -105,18 +117,6 @@ export default function Keyboard() {
                 ))
               ))}
             </ul>
-
-            {/* UNCONTROLLED
-            <section style={{display:"flex",justifyContent:"center"}}>
-              <input type="text" value={inputValue} ref={inputRef} onChange={handleInput} />
-            </section> */}
-
-            {/* CONTROLLED */}
-            <section style={{display:"flex",justifyContent:"center"}}>
-              <form name="vkForm" ref={formRef} onSubmit={handleSubmit}>
-                <input type="text" value={inputValue} ref={inputRef} onChange={handleInput} />
-              </form>
-            </section>
         </main>
     )
 }
