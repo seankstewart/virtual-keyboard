@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 // import { json } from "@remix-run/node";
 // import { useLoaderData } from "@remix-run/react";
 
@@ -32,6 +34,18 @@ export default function Keyboard() {
     const inputRef = useRef<HTMLInputElement>(null);
     
     const [inputValue, setInputValue] = useState('');
+
+    const getBtnLabel = (btnLabel: React.FC | Element | string) => {
+      switch (btnLabel) {
+        case 'Backspace':
+          btnLabel = <FontAwesomeIcon icon={faXmark} />
+          break;
+        default:
+          break;
+      }
+
+      return btnLabel;
+    }
 
     const handleKeyboardAction = (e: React.MouseEvent<HTMLButtonElement>): void => {
       e.preventDefault();
@@ -100,22 +114,24 @@ export default function Keyboard() {
               </form>
             </section>
 
-            <ul className="keyboard" style={{}}>
-              {extendedKeyboardAMC.map((row) => (
-                row.map((btn, index) => (
-                  <li style={{width:'100%'}} key={`${btn}-${index}`}>
-                    <button
-                      onClick={handleKeyboardAction}
-                      style={{width:'inherit',overflow:'hidden'}}
-                      className="text-blue-600"
-                      value={btn}
-                      // tabIndex={-1}
-                    >
-                      {btn}
-                    </button>
-                  </li>
-                ))
-              ))}
+            <ul className="keyboard">
+              {extendedKeyboardAMC.map((row) => {
+                return (
+                  row.map((btn, index) => {let btnLabel = getBtnLabel(btn);return (
+                    <li style={{width:'100%'}} key={`${btn}-${index}`}>
+                      <button
+                        onClick={handleKeyboardAction}
+                        style={{width:'inherit',overflow:'hidden'}}
+                        className="text-blue-600"
+                        value={btn}
+                        // tabIndex={-1}
+                      >
+                        {btnLabel}
+                      </button>
+                    </li>
+                  )})
+                )}
+              )}
             </ul>
         </main>
     )
