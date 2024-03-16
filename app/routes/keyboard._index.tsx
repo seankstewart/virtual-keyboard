@@ -1,15 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 // import { json } from "@remix-run/node";
 // import { useLoaderData } from "@remix-run/react";
 
-export const extendedKeyboardAMC = [
+export const vkBasic = [
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'Backspace'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm', '.'],
-    ['Cancel', 'Space', 'OK']
+    ['Space']
+];
+
+export const vkBasicSubmit = [
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'Backspace'],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm', '.'],
+    ['OK', 'Space', 'Cancel']
 ];
 
 // export const loader = async () => {
@@ -35,10 +43,10 @@ export default function Keyboard() {
     
     const [inputValue, setInputValue] = useState('');
 
-    const getBtnLabel = (btnLabel: React.FC | Element | string) => {
+    const getBtnLabel = (btnLabel: React.FC | Element | string):React.FC | Element | string => {
       switch (btnLabel) {
         case 'Backspace':
-          btnLabel = <FontAwesomeIcon icon={faXmark} />
+          btnLabel = <FontAwesomeIcon icon={faArrowLeft} />
           break;
         default:
           break;
@@ -114,22 +122,26 @@ export default function Keyboard() {
               </form>
             </section>
 
-            <ul className="keyboard">
-              {extendedKeyboardAMC.map((row) => {
+            <ul className={`keyboard ${Object.keys({vkBasic})[0].toLowerCase()}`}>
+              {vkBasic.map((row) => {
                 return (
-                  row.map((btn, index) => {let btnLabel = getBtnLabel(btn);return (
-                    <li style={{width:'100%'}} key={`${btn}-${index}`}>
-                      <button
-                        onClick={handleKeyboardAction}
-                        style={{width:'inherit',overflow:'hidden'}}
-                        className="text-blue-600"
-                        value={btn}
-                        // tabIndex={-1}
-                      >
-                        {btnLabel}
-                      </button>
-                    </li>
-                  )})
+                  row.map((btn, index) => {
+                    let btnLabel = getBtnLabel(btn);
+                    
+                    return (
+                      <li style={{width:'100%'}} key={`${btn}-${index}`}>
+                        <button
+                          onClick={handleKeyboardAction}
+                          style={{width:'inherit',overflow:'hidden'}}
+                          className="text-blue-600"
+                          value={btn}
+                          // tabIndex={-1}
+                        >
+                          {btnLabel}
+                        </button>
+                      </li>
+                    )
+                  })
                 )}
               )}
             </ul>
